@@ -1,0 +1,30 @@
+.input-field {
+  width: 20%;
+  padding: 10px;
+  margin-bottom: 10px;
+  margin-top: 40px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 16px;
+  padding: 15px;
+}
+
+.custom-btn {
+  margin-top: 40px;
+  left: 30px;
+  position: relative;
+}
+
+#input1 {
+  left: 20px;
+  position: relative;
+}
+
+#input2 {
+  left: 10px;
+  position: relative;
+}
+#input3 {
+  left: 20px;
+  position: relative;
+}

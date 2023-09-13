@@ -1,0 +1,31 @@
+.meals_list_container{   
+   display: flex;
+   flex-direction: column;
+   justify-content: center;
+   align-items: center;
+    margin-top: 70px;
+}
+
+#btn{
+    left: 10%;
+    position: relative;
+}
+
+#meal-table{
+    width: 50%;
+    text-align: center;
+}
+
+#filter_container_by_name{
+    padding: 10px;
+    margin-bottom: 20px;
+    border-radius: 20px;
+    left: 15%;
+    position: relative;
+}
+
+.filter_container_label{
+    left: 100px;
+    top: 36px;
+    position: relative;
+}
