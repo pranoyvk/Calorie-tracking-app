@@ -6,6 +6,8 @@ import AppControlsInput from './components/AppControls/AppControlInputs';
 import AppMealsList from './components/AppMealsList/AppMealsList';
 import AppModal from './components/AppModal/AppModal';
 import AppControlsPrice from './components/AppControls/AppControlsPrice';
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function App() {
 
@@ -47,9 +49,14 @@ function App() {
     setOpenModal(true);
    }
    else if(calories >= 2100){
-      alert("Daily limit has been exceeded");
+      toast.error('Daily limit has been exceeded', {
+        position: toast.POSITION.TOP_RIGHT,
+      });
    }
    else{
+     toast.success(`Added ${mealName} Successfully`, {
+        position: toast.POSITION.TOP_RIGHT,
+      });
     setMeals(newMeals);
     localStorage.setItem("meals", JSON.stringify(newMeals));
    }
@@ -68,7 +75,11 @@ function App() {
     const oldMeals = [...meals];
     console.log(oldMeals);
     const newMeals = oldMeals.filter((meal) => meal.id !== id);
-
+    const deletedMeal = oldMeals.find((meal) => meal.id === id);
+    console.log(newMeals);
+    toast.info(`You Deleted ${deletedMeal.mealName} Sucessfully`, {
+      position: toast.POSITION.TOP_RIGHT,
+    });
     setMeals(newMeals);
     localStorage.setItem("meals", JSON.stringify(newMeals));
   }
@@ -83,6 +94,7 @@ function App() {
     <>
     <div className="App">
      <AppBar />
+     <ToastContainer/>
      { openModal ? <AppModal setOpenModal={setOpenModal} /> : "" }
      <AppControls total={total}/>
      <AppControlsPrice priceTotal={priceTotal}/>

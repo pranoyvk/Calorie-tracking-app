@@ -1,5 +1,7 @@
 import React, { useState } from 'react'
 import './appmealslist.css'
+import { DataGrid } from '@mui/x-data-grid';
+
 
 function AppMealsList({meals, deleteMealHandler}) {
 
@@ -37,8 +39,8 @@ function AppMealsList({meals, deleteMealHandler}) {
         </thead>
       )}
       <tbody>
-        {filteredData.map((meal, index) => (
-          <tr key={index}>
+        {filteredData.map((meal, index) => {
+          return (<tr key={index}>
             <td>{meal.id}</td>
             <td>{meal.mealName}</td>
             <td>{meal.calories}</td>
@@ -47,8 +49,8 @@ function AppMealsList({meals, deleteMealHandler}) {
             <td>
               <button className='btn btn-danger' onClick={() => deleteMealHandler(meal.id)}>Clear</button>
             </td>
-          </tr>
-        ))}
+          </tr>)
+        })}
       </tbody>
     </table>
   </div>
