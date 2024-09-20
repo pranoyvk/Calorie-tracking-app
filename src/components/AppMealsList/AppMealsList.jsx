@@ -1,19 +1,17 @@
 import React, { useState } from 'react'
 import './appmealslist.css'
-import { DataGrid } from '@mui/x-data-grid';
-
 
 function AppMealsList({meals, deleteMealHandler}) {
 
   const [filter,setFilter] = useState('');
 
-  const filteredData = meals.filter(item => item.mealName.toLowerCase().includes(filter.toLowerCase()));
+  const filteredData = !!meals && meals.filter(item => item.mealName.toLowerCase().includes(filter.toLowerCase()));
 
   const filterMealHandler = (e) => {
     setFilter(e.target.value);
   }
 
-  const showTableHeaders = meals.length > 0;
+  const showTableHeaders = !!meals && meals.length > 0;
   return (
     <div className='meals_list_container'>
       {showTableHeaders && (
@@ -28,6 +26,7 @@ function AppMealsList({meals, deleteMealHandler}) {
     <table className="table table-bordered border-primary" id='meal-table'>
       {showTableHeaders && (
         <thead>
+        {!filteredData.length ? <p>No Items Found</p> :
           <tr>
             <th>ID</th>
             <th>Meal</th>
@@ -36,10 +35,11 @@ function AppMealsList({meals, deleteMealHandler}) {
             <th>Date</th>
             <th>Action</th>
           </tr>
+        }
         </thead>
       )}
       <tbody>
-        {filteredData.map((meal, index) => {
+        {!!filteredData && filteredData.map((meal, index) => {
           return (<tr key={index}>
             <td>{meal.id}</td>
             <td>{meal.mealName}</td>

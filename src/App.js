@@ -18,7 +18,7 @@ function App() {
   const[openModal,setOpenModal] = useState(false);
 
   const addMealHandler = () =>{
-   const oldMeals = [...meals];
+    const oldMeals = Array.isArray(meals) ? [...meals] : [];
 
    var now = new Date(),
    date = [
@@ -39,17 +39,19 @@ function App() {
     mealName,
     calories,
     price,
-    date,
+    date, 
     id: Math.floor(Math.random()*1000),
    }
 
    const newMeals = [...oldMeals,meal];
+   const totalCalories = newMeals.reduce((sum, meal) => sum + parseInt(meal.calories), 0);
 
-   if(calories <= 0 || mealName == ""){
+   console.log(totalCalories);
+   if(calories <= 0 || mealName === ""){
     setOpenModal(true);
    }
-   else if(calories >= 2100){
-      toast.error('Daily limit has been exceeded', {
+   else if(totalCalories >= 2100){
+      toast.info('Daily limit 2100 calories has been exceeded', {
         position: toast.POSITION.TOP_RIGHT,
       });
    }
@@ -63,21 +65,20 @@ function App() {
 
    setMealName("");
    setCalories(0);
+   setPrice(0);
   }
 
-  const total = meals.map((meal)=> meal.calories)
+  const total = !!meals && meals.map((meal)=> meal.calories)
   .reduce((acc,value)=> acc + +value,0);
 
-  const priceTotal = meals.map((meal)=> meal.price)
+  const priceTotal = !!meals && meals.map((meal)=> meal.price)
   .reduce((account,value) => account+ +value,0)
 
   const deleteMealHandler = (id) =>{
     const oldMeals = [...meals];
-    console.log(oldMeals);
     const newMeals = oldMeals.filter((meal) => meal.id !== id);
     const deletedMeal = oldMeals.find((meal) => meal.id === id);
-    console.log(newMeals);
-    toast.info(`You Deleted ${deletedMeal.mealName} Sucessfully`, {
+    toast.error(`You Deleted ${deletedMeal.mealName} Sucessfully`, {
       position: toast.POSITION.TOP_RIGHT,
     });
     setMeals(newMeals);
@@ -98,7 +99,9 @@ function App() {
      { openModal ? <AppModal setOpenModal={setOpenModal} /> : "" }
      <AppControls total={total}/>
      <AppControlsPrice priceTotal={priceTotal}/>
-     <AppControlsInput addMealHandler={addMealHandler} mealName={mealName} calories={calories} price={price} setPrice ={setPrice} setCalories={setCalories} setMealName={setMealName}/>
+     <AppControlsInput addMealHandler={addMealHandler} mealName={mealName} 
+     calories={calories} price={price} setPrice ={setPrice} 
+     setCalories={setCalories} setMealName={setMealName}/>
     </div>
     <div className='meals_container'>
       <AppMealsList meals={meals} deleteMealHandler={deleteMealHandler}/>
